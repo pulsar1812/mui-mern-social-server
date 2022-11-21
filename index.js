@@ -1,6 +1,6 @@
-import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import express from 'express'
 import mongoose from 'mongoose'
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -33,3 +33,23 @@ if (process.env.NODE_ENV === 'development') {
 app.use(cors())
 
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')))
+
+// File storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/assets')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  },
+})
+const upload = multer({ storage })
+
+// Connect to MongoDB and listen to PORT 5000
+const PORT = process.env.PORT || 5000
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server running on Port ${PORT}`))
+  })
+  .catch((error) => console.log('Connection error: ', error))
