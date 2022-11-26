@@ -8,6 +8,12 @@ import multer from 'multer'
 import helmet from 'helmet'
 import morgan from 'morgan'
 
+import authRoutes from './routes/auth'
+import userRoutes from './routes/users'
+import postRoutes from './routes/posts'
+import { register } from './controllers/auth'
+import { createPost } from './controllers/posts'
+
 // Needed when we use type 'module' in package.json
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -45,11 +51,24 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
+// Routes with file upload
+app.post('/auth/register', upload.single('picture'), register)
+app.post('/posts', upload.single('picture'), createPost)
+
+// Routes
+app.use('/auth', authRoutes)
+app.use('/users', userRoutes)
+app.use('/posts', postRoutes)
+
 // Connect to MongoDB and listen to PORT 5000
 const PORT = process.env.PORT || 5000
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(PORT, () => console.log(`Server running on Port ${PORT}`))
+    app.listen(PORT, () =>
+      console.log(
+        `Server running in ${process.env.NODE_ENV} mode on Port ${PORT}`
+      )
+    )
   })
-  .catch((error) => console.log('Connection error: ', error))
+  .catch((err) => console.log('Connection error: ', err))
