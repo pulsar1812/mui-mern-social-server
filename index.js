@@ -13,6 +13,7 @@ import userRoutes from './routes/users.js'
 import postRoutes from './routes/posts.js'
 import { register } from './controllers/auth.js'
 import { createPost } from './controllers/posts.js'
+import { verifyToken } from './middlewares/auth.js'
 
 // Needed when we use type 'module' in package.json
 const __filename = fileURLToPath(import.meta.url)
@@ -53,7 +54,7 @@ const upload = multer({ storage })
 
 // Routes with file upload
 app.post('/auth/register', upload.single('picture'), register)
-app.post('/posts', upload.single('picture'), createPost)
+app.post('/posts', verifyToken, upload.single('picture'), createPost)
 
 // Routes
 app.use('/auth', authRoutes)
