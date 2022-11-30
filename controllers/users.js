@@ -1,4 +1,4 @@
-import User from '../models/User'
+import User from '../models/User.js'
 
 // @desc    Get User
 // @route   GET /users/:userId
@@ -11,7 +11,7 @@ export const getUser = async (req, res) => {
 
     res.status(200).json(user)
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -41,7 +41,7 @@ export const getUserFriends = async (req, res) => {
 
     res.status(200).json(formattedFriends)
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -80,6 +80,6 @@ export const addRemoveFriend = async (req, res) => {
 
     res.status(200).json(formattedFriends)
   } catch (err) {
-    res.status(500).json({ error: err.message })
+    res.status(500).json({ message: err.message })
   }
 }

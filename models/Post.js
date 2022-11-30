@@ -3,7 +3,7 @@ import { model, Schema } from 'mongoose'
 const PostSchema = new Schema(
   {
     userId: {
-      type: Schema.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       required: true,
     },
