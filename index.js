@@ -14,9 +14,6 @@ import postRoutes from './routes/posts.js'
 import { register } from './controllers/auth.js'
 import { createPost } from './controllers/posts.js'
 import { verifyToken } from './middlewares/auth.js'
-import User from './models/User.js'
-import Post from './models/Post.js'
-import { posts, users } from './data/index.js'
 
 // Needed when we use type 'module' in package.json
 const __filename = fileURLToPath(import.meta.url)
