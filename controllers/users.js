@@ -46,7 +46,7 @@ export const getUserFriends = async (req, res) => {
 }
 
 // @desc    Add or Remove Friends
-// @route   GET /users/:userId/:friendId
+// @route   PATCH /users/:userId/:friendId
 // @access  Private
 export const addRemoveFriend = async (req, res) => {
   const { userId, friendId } = req.params
