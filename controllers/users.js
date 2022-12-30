@@ -63,6 +63,9 @@ export const addRemoveFriend = async (req, res) => {
       friend.friends.push(userId)
     }
 
+    await user.save()
+    await friend.save()
+
     const friends = await Promise.all(
       user.friends.map((itemId) => User.findById(itemId))
     )
