@@ -31,7 +31,7 @@ export const createPost = async (req, res) => {
   }
 }
 
-// @desc    Get Posts
+// @desc    Get All Posts
 // @route   GET /posts
 // @access  Private
 export const getFeedPosts = async (req, res) => {
@@ -57,15 +57,19 @@ export const getUserPosts = async (req, res) => {
   }
 }
 
-// @desc    Like Post
+// @desc    Add or Remove Like
 // @route   PATCH /:postId/like
 // @access  Private
 export const likePost = async (req, res) => {
   const { postId } = req.params
+  console.log(postId)
+
   const { userId } = req.body
+  console.log(userId)
 
   try {
     const post = await Post.findById(postId)
+    // likes - Map data type
     const isLiked = post.likes.get(userId)
 
     if (isLiked) {
